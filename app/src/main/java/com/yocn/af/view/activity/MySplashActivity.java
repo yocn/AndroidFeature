@@ -29,19 +29,15 @@ public class MySplashActivity extends BaseActivity {
     //https://i.loli.net/2019/09/24/QdEOUKNeaishADR.jpg
     String color2 = "https://i.loli.net/2019/09/24/lyJ9AziRIE264ux.jpg";
     String gray2 = "https://i.loli.net/2019/09/24/QdEOUKNeaishADR.jpg";
-    ImageView mImageIV1;
-    ImageView mImageIVTop1;
-    ImageView mImageIV2;
-    ImageView mImageIVTop2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        mImageIV1 = findViewById(R.id.iv_image1);
-        mImageIVTop1 = findViewById(R.id.iv_image_top1);
-        mImageIV2 = findViewById(R.id.iv_image2);
-        mImageIVTop2 = findViewById(R.id.iv_image_top2);
+        ImageView mImageIV1 = findViewById(R.id.iv_image1);
+        ImageView mImageIVTop1 = findViewById(R.id.iv_image_top1);
+        ImageView mImageIV2 = findViewById(R.id.iv_image2);
+        ImageView mImageIVTop2 = findViewById(R.id.iv_image_top2);
         Glide.get(MySplashActivity.this).clearMemory();
         DrawableCrossFadeFactory factory =
                 new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
@@ -90,12 +86,4 @@ public class MySplashActivity extends BaseActivity {
                 });
     }
 
-    @Override
-    protected void onDestroy() {
-        mImageIV1 = null;
-        mImageIV2 = null;
-        mImageIVTop1 = null;
-        mImageIVTop2 = null;
-        super.onDestroy();
-    }
 }
