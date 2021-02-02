@@ -18,15 +18,8 @@ public class JumpBean {
         return show;
     }
 
-    public void setShow(String show) {
-        this.show = show;
-    }
-
     public Class getToClass() {
         return toClass;
     }
 
-    public void setToClass(Class toClass) {
-        this.toClass = toClass;
-    }
 }

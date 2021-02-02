@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.yocn.af">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.yocn.af">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,15 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.DayNight">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.asm.ASMActivity"/>
-        <activity android:name=".view.splash.MySplashActivity"/>
+        <activity
+            android:name=".view.activity.ASMActivity"
+            android:theme="@style/Theme.AppCompat.DayNight" />
+        <activity
+            android:name=".view.activity.MySplashActivity"
+            android:theme="@style/Theme.AppCompat.DayNight" />
     </application>
 
 </manifest>

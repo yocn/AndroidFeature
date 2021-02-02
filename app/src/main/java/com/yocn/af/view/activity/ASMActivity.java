@@ -1,4 +1,4 @@
-package com.yocn.af.view.asm;
+package com.yocn.af.view.activity;
 
 
 import android.app.Activity;
@@ -8,6 +8,6 @@ import android.app.Activity;
  * @Date 2019/9/23 4:11 PM
  * @ClassName ASMActivity
  */
-public class ASMActivity extends Activity {
+public class ASMActivity extends BaseActivity {
 
 }

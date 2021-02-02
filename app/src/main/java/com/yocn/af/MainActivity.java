@@ -1,12 +1,7 @@
 package com.yocn.af;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Size;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,15 +9,20 @@ import android.widget.RelativeLayout;
 
 import com.yocn.af.module.base.JumpBean;
 import com.yocn.af.presenter.DisplayUtil;
+import com.yocn.af.view.activity.BaseActivity;
 import com.yocn.af.view.adapter.MainAdapter;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
  * @author yocn
  */
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
     RecyclerView mRecyclerView;
     RelativeLayout mTopRL;
 
@@ -48,10 +48,6 @@ public class MainActivity extends Activity {
     private void initView(View root) {
         mRecyclerView = root.findViewById(R.id.rv_main);
         mTopRL = root.findViewById(R.id.rl_top);
-        mTopRL.post(() -> {
-            int height = getWindow().getDecorView().getMeasuredHeight();
-            int width = getWindow().getDecorView().getMeasuredWidth();
-        });
     }
 
     private int currentY;
@@ -80,9 +76,8 @@ public class MainActivity extends Activity {
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(mMainAdapter);
 
-        final int min = DisplayUtil.dip2px(this, 100);
+        final int min = DisplayUtil.dip2px(this, 76);
         final int max = DisplayUtil.dip2px(this, 140);
-        gridLayoutManager.scrollToPositionWithOffset(0, -200);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

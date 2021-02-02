@@ -2,7 +2,6 @@ package com.yocn.af.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,12 @@ import android.widget.VideoView;
 import com.yocn.af.R;
 import com.yocn.af.module.base.JumpBean;
 import com.yocn.af.presenter.LogUtil;
-import com.yocn.af.view.splash.MySplashActivity;
+import com.yocn.af.view.activity.MySplashActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -41,14 +42,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static List<JumpBean> getDataList() {
         List<JumpBean> list = new ArrayList<>();
-        list.add(new JumpBean("TextureView预览", MySplashActivity.class));
-        list.add(new JumpBean("预览并获取数据", MySplashActivity.class));
-        list.add(new JumpBean("Yuv数据获取", MySplashActivity.class));
-        list.add(new JumpBean("Yuv数据获取 方式2", MySplashActivity.class));
-        list.add(new JumpBean("Native转换Yuv", MySplashActivity.class));
-        list.add(new JumpBean("libyuv做ARGB和I420转换", MySplashActivity.class));
-        list.add(new JumpBean("GPUImage预览", MySplashActivity.class));
-        list.add(new JumpBean("TestScrollActivity", MySplashActivity.class));
+        list.add(new JumpBean("Be Colorful", MySplashActivity.class));
         list.add(new JumpBean("4", MySplashActivity.class));
         list.add(new JumpBean("5", MySplashActivity.class));
         list.add(new JumpBean("6", MySplashActivity.class));
