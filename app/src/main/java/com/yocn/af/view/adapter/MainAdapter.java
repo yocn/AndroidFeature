@@ -13,7 +13,8 @@ import android.widget.VideoView;
 import com.yocn.af.R;
 import com.yocn.af.module.base.JumpBean;
 import com.yocn.af.presenter.LogUtil;
-import com.yocn.af.view.activity.MySplashActivity;
+import com.yocn.af.view.activity.ColorFadeInActivity;
+import com.yocn.af.view.activity.ColorFadeInActivity2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,19 +43,19 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static List<JumpBean> getDataList() {
         List<JumpBean> list = new ArrayList<>();
-        list.add(new JumpBean("Be Colorful", MySplashActivity.class));
-        list.add(new JumpBean("4", MySplashActivity.class));
-        list.add(new JumpBean("5", MySplashActivity.class));
-        list.add(new JumpBean("6", MySplashActivity.class));
-        list.add(new JumpBean("7", MySplashActivity.class));
-        list.add(new JumpBean("8", MySplashActivity.class));
-        list.add(new JumpBean("9", MySplashActivity.class));
-        list.add(new JumpBean("10", MySplashActivity.class));
-        list.add(new JumpBean("11", MySplashActivity.class));
-        list.add(new JumpBean("12", MySplashActivity.class));
-        list.add(new JumpBean("13", MySplashActivity.class));
-        list.add(new JumpBean("14", MySplashActivity.class));
-        list.add(new JumpBean("15", MySplashActivity.class));
+        list.add(new JumpBean("Color Fade In", ColorFadeInActivity.class));
+        list.add(new JumpBean("Color Fade In 2", ColorFadeInActivity2.class));
+        list.add(new JumpBean("5", ColorFadeInActivity.class));
+        list.add(new JumpBean("6", ColorFadeInActivity.class));
+        list.add(new JumpBean("7", ColorFadeInActivity.class));
+        list.add(new JumpBean("8", ColorFadeInActivity.class));
+        list.add(new JumpBean("9", ColorFadeInActivity.class));
+        list.add(new JumpBean("10", ColorFadeInActivity.class));
+        list.add(new JumpBean("11", ColorFadeInActivity.class));
+        list.add(new JumpBean("12", ColorFadeInActivity.class));
+        list.add(new JumpBean("13", ColorFadeInActivity.class));
+        list.add(new JumpBean("14", ColorFadeInActivity.class));
+        list.add(new JumpBean("15", ColorFadeInActivity.class));
         return list;
     }
 

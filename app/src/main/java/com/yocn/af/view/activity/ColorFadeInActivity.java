@@ -21,7 +21,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
  * @Date 2019/9/24 2:55 PM
  * @ClassName MySplashActivity
  */
-public class MySplashActivity extends BaseActivity {
+public class ColorFadeInActivity extends BaseActivity {
 
     String color1 = "https://i.loli.net/2019/09/24/t1GcrQ4O6TK7efw.jpg";
     String gray1 = "https://i.loli.net/2019/09/24/Ny1uEHhmYrKPJoG.jpg";
@@ -38,10 +38,10 @@ public class MySplashActivity extends BaseActivity {
         ImageView mImageIVTop1 = findViewById(R.id.iv_image_top1);
         ImageView mImageIV2 = findViewById(R.id.iv_image2);
         ImageView mImageIVTop2 = findViewById(R.id.iv_image_top2);
-        Glide.get(MySplashActivity.this).clearMemory();
+        Glide.get(ColorFadeInActivity.this).clearMemory();
         DrawableCrossFadeFactory factory =
                 new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
-        Glide.with(MySplashActivity.this)
+        Glide.with(ColorFadeInActivity.this)
                 .load(gray1)
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -63,7 +63,7 @@ public class MySplashActivity extends BaseActivity {
                     }
                 });
 
-        Glide.with(MySplashActivity.this)
+        Glide.with(ColorFadeInActivity.this)
                 .load(gray2)
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)

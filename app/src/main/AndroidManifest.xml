@@ -26,7 +26,10 @@
             android:name=".view.activity.ASMActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".view.activity.MySplashActivity"
+            android:name=".view.activity.ColorFadeInActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".view.activity.ColorFadeInActivity2"
             android:theme="@style/AppTheme" />
     </application>
 
