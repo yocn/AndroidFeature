@@ -79,9 +79,9 @@ public class FadeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
         VH holder = (VH) viewholder;
-        String url = mData.get(position);
+        String url = mData.get(position % mData.size());
         Glide.with(mContext)
-                .load(mData.get(position))
+                .load(url)
                 .centerCrop()
                 .transform(new GrayscaleTransformation())
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -90,7 +90,7 @@ public class FadeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                         holder.rawIv.setImageDrawable(resource);
                         Glide.with(mContext)
-                                .load(mData.get(position))
+                                .load(url)
                                 .centerCrop()
                                 .transition(withCrossFade(factory))
                                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
