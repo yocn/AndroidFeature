@@ -31,6 +31,18 @@
         <activity
             android:name=".view.activity.ColorFadeInActivity2"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".view.activity.taskStack.StandardActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".view.activity.taskStack.SingleTopActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".view.activity.taskStack.SingleTaskActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".view.activity.taskStack.SingleInstanceActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
