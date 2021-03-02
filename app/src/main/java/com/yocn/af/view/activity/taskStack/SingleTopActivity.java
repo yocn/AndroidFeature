@@ -13,6 +13,6 @@ public class SingleTopActivity extends BaseTaskStackActivity {
 
     @Override
     protected void clickRoot() {
-        startNext(SingleTaskActivity.class);
+        startNext();
     }
 }

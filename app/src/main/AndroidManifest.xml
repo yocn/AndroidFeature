@@ -32,16 +32,24 @@
             android:name=".view.activity.ColorFadeInActivity2"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".view.activity.taskStack.TestStackActivity"
+            android:launchMode="standard"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".view.activity.taskStack.StandardActivity"
+            android:launchMode="standard"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".view.activity.taskStack.SingleTopActivity"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".view.activity.taskStack.SingleTaskActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".view.activity.taskStack.SingleInstanceActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme" />
     </application>
 

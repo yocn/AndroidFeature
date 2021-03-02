@@ -9,13 +9,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-
 import com.yocn.af.R;
 import com.yocn.af.module.base.JumpBean;
 import com.yocn.af.presenter.LogUtil;
 import com.yocn.af.view.activity.ColorFadeInActivity;
 import com.yocn.af.view.activity.ColorFadeInActivity2;
-import com.yocn.af.view.activity.taskStack.StandardActivity;
+import com.yocn.af.view.activity.taskStack.TestStackActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         List<JumpBean> list = new ArrayList<>();
         list.add(new JumpBean("Color Fade In", ColorFadeInActivity.class));
         list.add(new JumpBean("Color Fade In 2", ColorFadeInActivity2.class));
-        list.add(new JumpBean("Task Stack", StandardActivity.class));
+        list.add(new JumpBean("Task Stack", TestStackActivity.class));
         list.add(new JumpBean("6", ColorFadeInActivity.class));
         list.add(new JumpBean("7", ColorFadeInActivity.class));
         list.add(new JumpBean("8", ColorFadeInActivity.class));

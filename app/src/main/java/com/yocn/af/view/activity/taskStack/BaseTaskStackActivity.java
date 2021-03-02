@@ -9,33 +9,30 @@ import android.widget.TextView;
 import com.yocn.af.R;
 import com.yocn.af.presenter.LogUtil;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class BaseTaskStackActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String INDEX = "INDEX";
-    private int index = 0;
+    public static final String STACK = "STACK";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_stack);
-        applyIntent();
         TextView showTv = findViewById(R.id.tv_show);
         showTv.setText(getClass().getSimpleName());
         findViewById(R.id.fl_root).setOnClickListener(this);
         getActivityStack();
+        startNext();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    private void applyIntent() {
-        index = getIntent().getIntExtra(INDEX, 0);
     }
 
     @Override
@@ -45,10 +42,23 @@ public class BaseTaskStackActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    protected void startNext(Class<? extends AppCompatActivity> clazz) {
-        Intent intent = new Intent(this, index == 0 ? this.getClass() : clazz);
-        intent.putExtra(INDEX, ++index == 2 ? 0 : index);
-        startActivity(intent);
+    protected void startNext() {
+        Serializable list = getIntent().getSerializableExtra(STACK);
+        ArrayList<StackBean> stackBeans = (ArrayList<StackBean>) list;
+        startNext(stackBeans);
+    }
+
+    protected void startNext(ArrayList<StackBean> stackBeans) {
+        if (stackBeans == null || stackBeans.size() == 0) {
+            return;
+        }
+        StackBean first = stackBeans.get(0);
+        stackBeans.remove(0);
+        if (first != null) {
+            Intent intent = new Intent(this, first.clazz);
+            intent.putExtra(STACK, stackBeans);
+            startActivity(intent);
+        }
     }
 
     private void getActivityStack() {
@@ -66,4 +76,5 @@ public class BaseTaskStackActivity extends AppCompatActivity implements View.OnC
     protected void clickRoot() {
 
     }
+
 }
