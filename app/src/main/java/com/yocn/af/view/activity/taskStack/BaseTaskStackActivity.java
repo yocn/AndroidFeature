@@ -1,5 +1,6 @@
 package com.yocn.af.view.activity.taskStack;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,11 +8,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yocn.af.R;
-import com.yocn.af.presenter.LogUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,15 +64,16 @@ public class BaseTaskStackActivity extends AppCompatActivity implements View.OnC
     }
 
     private void getActivityStack() {
-        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.AppTask> appTasks = activityManager.getAppTasks();
-        for (int i = 0; i < appTasks.size(); i++) {
-            LogUtil.d(i + getSimpleName(appTasks.get(i).getTaskInfo()));
-        }
+//        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+//        List<ActivityManager.AppTask> appTasks = activityManager.getAppTasks();
+//        for (int i = 0; i < appTasks.size(); i++) {
+//            LogUtil.d("TaskId:" + getTaskId() + " " + getSimpleName(appTasks.get(i).getTaskInfo()));
+//        }
     }
 
     private String getSimpleName(ActivityManager.RecentTaskInfo recentTaskInfo) {
-        return "-" + recentTaskInfo.numActivities + ":" + recentTaskInfo.topActivity;
+        String activityName = recentTaskInfo.topActivity.getShortClassName();
+        return "-" + recentTaskInfo.numActivities + ":" + activityName.substring(activityName.lastIndexOf("."));
     }
 
     protected void clickRoot() {

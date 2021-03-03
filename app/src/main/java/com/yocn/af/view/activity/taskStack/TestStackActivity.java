@@ -2,9 +2,7 @@ package com.yocn.af.view.activity.taskStack;
 
 import android.os.Bundle;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import androidx.annotation.Nullable;
 
