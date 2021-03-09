@@ -18,10 +18,14 @@ public class TestStackActivity extends BaseTaskStackActivity {
         ArrayList<StackBean> stackBeans = new ArrayList<>();
         stackBeans.add(new StackBean(StandardActivity.class));
         stackBeans.add(new StackBean(SingleTaskActivity.class));
+        stackBeans.add(new StackBean(SingleTaskActivity.class));
         stackBeans.add(new StackBean(StandardActivity.class));
         stackBeans.add(new StackBean(SingleTopActivity.class));
         stackBeans.add(new StackBean(StandardActivity.class));
         stackBeans.add(new StackBean(SingleInstanceActivity.class));
+        stackBeans.add(new StackBean(StandardActivity.class));
+        stackBeans.add(new StackBean(SingleTopActivity.class));
+        stackBeans.add(new StackBean(SingleTopActivity.class));
         stackBeans.add(new StackBean(StandardActivity.class));
         startNext(stackBeans);
     }
