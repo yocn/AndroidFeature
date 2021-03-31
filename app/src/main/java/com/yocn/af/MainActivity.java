@@ -3,12 +3,11 @@ package com.yocn.af;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.yocn.af.module.base.JumpBean;
 import com.yocn.af.presenter.DisplayUtil;
+import com.yocn.af.util.TestUtil;
 import com.yocn.af.view.activity.BaseActivity;
 import com.yocn.af.view.adapter.MainAdapter;
 
@@ -38,6 +37,7 @@ public class MainActivity extends BaseActivity {
     private void initView(View root) {
         mRecyclerView = root.findViewById(R.id.rv_main);
         mTopRL = root.findViewById(R.id.rl_top);
+        TestUtil.testSingleTon();
     }
 
     private int currentY;

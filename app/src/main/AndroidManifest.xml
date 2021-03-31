@@ -33,6 +33,9 @@
             android:name=".view.activity.ColorFadeInActivity2"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".view.activity.TestWindowActivity"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".view.activity.taskStack.TestStackActivity"
             android:launchMode="standard"
             android:theme="@style/AppTheme" />
