@@ -37,8 +37,6 @@ public class TestUtil {
         Object mGlobal = instanceMedthod.invoke(null);
         Object mViews = mViewsField.get(mGlobal);
         Object mRoots = mRootsField.get(mGlobal);
-        Object mParams = mParamsField.get(mGlobal);
-//        LogUtil.d("mParams:" + mParams.toString());
         if (mViews instanceof List) {
             for (Object o : (List) mViews) {
                 printDecorView(o);
@@ -55,20 +53,22 @@ public class TestUtil {
         Field mViewField = viewRootImpl.getClass().getDeclaredField("mView");
         mViewField.setAccessible(true);
         Object mViewObject = mViewField.get(viewRootImpl);
-        LogUtil.d("ViewRootImpl->" + mViewObject.toString());
+        LogUtil.d("printViewRootImpl->" + viewRootImpl + "  View:" + mViewObject.toString());
     }
 
-    public static void printDecorView(Object decorView) throws NoSuchFieldException, IllegalAccessException {
+    public static void printDecorView(Object decorView) throws IllegalAccessException {
         StringBuffer sb = new StringBuffer(decorView.toString());
-        if (decorView.getClass().toString().contains("PopupDecorView")) {
-            //android.widget.PopupWindow$PopupDecorView
-        } else {
-            Field mWindowField = decorView.getClass().getDeclaredField("mWindow");
+        Field mWindowField = null;
+        try {
+            mWindowField = decorView.getClass().getDeclaredField("mWindow");
             mWindowField.setAccessible(true);
             Object mWindowObject = mWindowField.get(decorView);
             sb.append("   PhoneWindow->").append(mWindowObject.toString());
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            sb.append("   PhoneWindow->").append(decorView.getClass().toString());
         }
-        LogUtil.d("DecorView->:" + sb.toString());
+        LogUtil.d("printDecorView->:" + sb.toString());
     }
 
     public static void testSingleTon() {

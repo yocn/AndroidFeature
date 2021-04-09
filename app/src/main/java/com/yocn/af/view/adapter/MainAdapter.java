@@ -16,6 +16,7 @@ import com.yocn.af.view.activity.ColorFadeInActivity;
 import com.yocn.af.view.activity.ColorFadeInActivity2;
 import com.yocn.af.view.activity.TestWindowActivity;
 import com.yocn.af.view.activity.TouchEventDispatchActivity;
+import com.yocn.af.view.activity.TransitionActivity;
 import com.yocn.af.view.activity.taskStack.TestStackActivity;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         list.add(new JumpBean("Task Stack", TestStackActivity.class));
         list.add(new JumpBean("TouchDispatch", TouchEventDispatchActivity.class));
         list.add(new JumpBean("TestWindowActivity", TestWindowActivity.class));
-        list.add(new JumpBean("8", ColorFadeInActivity.class));
+        list.add(new JumpBean("Transition", TransitionActivity.class));
         list.add(new JumpBean("9", ColorFadeInActivity.class));
         list.add(new JumpBean("10", ColorFadeInActivity.class));
         list.add(new JumpBean("11", ColorFadeInActivity.class));

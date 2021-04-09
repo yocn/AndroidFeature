@@ -60,6 +60,14 @@
             android:name=".view.activity.TouchEventDispatchActivity"
             android:launchMode="standard"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".view.activity.TransitionActivity"
+            android:launchMode="standard"
+            android:theme="@style/TransTheme" />
+        <activity
+            android:name=".view.activity.TransitionTargetActivity"
+            android:launchMode="standard"
+            android:theme="@style/TransTheme" />
     </application>
 
 </manifest>
