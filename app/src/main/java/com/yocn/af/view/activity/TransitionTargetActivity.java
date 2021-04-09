@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.yocn.af.R;
 import com.yocn.af.presenter.DisplayUtil;
+import com.yocn.af.presenter.LogUtil;
 
 public class TransitionTargetActivity extends BaseActivity {
 
@@ -24,19 +25,12 @@ public class TransitionTargetActivity extends BaseActivity {
         srcY = getIntent().getIntExtra("y", 0);
         int w = getIntent().getIntExtra("w", 0);
         int h = getIntent().getIntExtra("h", 0);
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) coverImg.getLayoutParams();
-        layoutParams.topMargin = srcX;
-        layoutParams.leftMargin = srcY;
-        coverImg.setLayoutParams(layoutParams);
+        coverImg.setX(srcX);
+        coverImg.setY(srcY);
         int[] wh = DisplayUtil.getHW(this);
         tarX = wh[0] / 2 - w / 2;
         tarY = 200;
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                doAnim();
-            }
-        });
+        new Handler().post(() -> doAnim());
     }
 
     private void doAnim() {
@@ -44,7 +38,7 @@ public class TransitionTargetActivity extends BaseActivity {
         ObjectAnimator transYAnim = ObjectAnimator.ofFloat(coverImg, "translationY", srcY, tarY);
         AnimatorSet set = new AnimatorSet();
         set.playTogether(transXAnim, transYAnim);
-        set.setDuration(200);
+        set.setDuration(500);
         set.start();
     }
 

@@ -44,7 +44,7 @@ public class MApplication extends Application {
                 map.put(taskId, activityList);
                 for (Map.Entry<Integer, List<Activity>> task : map.entrySet()) {
                     for (Activity activity1 : task.getValue()) {
-                        LogUtil.d(task.getKey() + " / " + activity1.getClass().getName());
+//                        LogUtil.d(rtask.getKey() + " / " + activity1.getClass().getName());
                     }
                 }
             }
