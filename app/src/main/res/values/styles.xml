@@ -10,8 +10,10 @@
     </style>
 
     <!-- Base application theme. -->
-    <style name="TransTheme" parent="AppTheme">
-<!--        <item name="colorControlHighlight">@color/ControlHighlight</item>-->
+    <style name="TransTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <!--        <item name="colorControlHighlight">@color/ControlHighlight</item>-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowBackground">@drawable/bg_window_drawable</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentTransitions">true</item>
     </style>

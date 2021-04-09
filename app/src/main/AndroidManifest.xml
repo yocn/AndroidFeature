@@ -63,7 +63,7 @@
         <activity
             android:name=".view.activity.TransitionActivity"
             android:launchMode="standard"
-            android:theme="@style/TransTheme" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".view.activity.TransitionTargetActivity"
             android:launchMode="standard"

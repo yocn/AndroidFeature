@@ -26,7 +26,13 @@ public class DisplayUtil {
     public static int px2dip(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
+    }
 
+    public static int[] getHW(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int screenWidth = wm.getDefaultDisplay().getWidth();
+        int screenHeight = wm.getDefaultDisplay().getHeight();
+        return new int[]{screenWidth, screenHeight};
     }
 
     public static void setStatusBarColor(Activity activity, int colorId) {
