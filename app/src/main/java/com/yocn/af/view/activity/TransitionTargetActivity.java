@@ -5,11 +5,9 @@ import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.yocn.af.R;
 import com.yocn.af.presenter.DisplayUtil;
-import com.yocn.af.presenter.LogUtil;
 
 public class TransitionTargetActivity extends BaseActivity {
 
@@ -30,14 +28,16 @@ public class TransitionTargetActivity extends BaseActivity {
         int[] wh = DisplayUtil.getHW(this);
         tarX = wh[0] / 2 - w / 2;
         tarY = 200;
-        new Handler().post(() -> doAnim());
+        new Handler().postDelayed(this::doAnim, 150);
     }
 
     private void doAnim() {
         ObjectAnimator transXAnim = ObjectAnimator.ofFloat(coverImg, "translationX", srcX, tarX);
         ObjectAnimator transYAnim = ObjectAnimator.ofFloat(coverImg, "translationY", srcY, tarY);
+        ObjectAnimator scaleXAnim = ObjectAnimator.ofFloat(coverImg, "scaleX", 1f, 1.5f);
+        ObjectAnimator scaleYAnim = ObjectAnimator.ofFloat(coverImg, "scaleY", 1f, 1.5f);
         AnimatorSet set = new AnimatorSet();
-        set.playTogether(transXAnim, transYAnim);
+        set.playTogether(transXAnim, transYAnim, scaleXAnim, scaleYAnim);
         set.setDuration(500);
         set.start();
     }
