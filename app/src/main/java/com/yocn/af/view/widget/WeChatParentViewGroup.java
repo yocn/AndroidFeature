@@ -62,6 +62,9 @@ public class WeChatParentViewGroup extends RelativeLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         boolean result = super.dispatchTouchEvent(ev);
+        if (ev.getAction() == MotionEvent.ACTION_UP) {
+            voiceView.setVisibility(View.GONE);
+        }
         LogUtil.d(TAG + "::dispatchTouchEvent::" + result + "  " + ViewUtil.printEvent(ev));
         return result;
     }
@@ -99,9 +102,9 @@ public class WeChatParentViewGroup extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean result = super.onTouchEvent(event);
+//        boolean result = super.onTouchEvent(event);
+        boolean result = voiceView.onTouchEvent(event);
         LogUtil.d(TAG + "::onTouchEvent::" + result + "    ");
-
         return result;
     }
 
