@@ -24,6 +24,8 @@ import androidx.annotation.Nullable;
  */
 
 public class TouchViewGroup extends FrameLayout {
+    private String position = "";
+
     public TouchViewGroup(@NonNull Context context) {
         super(context);
     }
@@ -36,24 +38,34 @@ public class TouchViewGroup extends FrameLayout {
         super(context, attrs, defStyleAttr);
     }
 
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         boolean result = super.dispatchTouchEvent(ev);
-        LogUtil.d("ViewGroup::dispatchTouchEvent::" + result + "  " + ViewUtil.printEvent(ev));
+        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+            LogUtil.logWithInterval(position + "::dispatchTouchEvent::" + result + "  " + ViewUtil.printEvent(ev));
+        } else {
+            LogUtil.d(position + "::dispatchTouchEvent::" + result + "  " + ViewUtil.printEvent(ev));
+        }
         return result;
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         boolean result = super.onInterceptTouchEvent(ev);
-        LogUtil.d("ViewGroup::onInterceptTouchEvent::" + result);
-        return result;
+        LogUtil.d(position + "::onInterceptTouchEvent::" + result);
+        return true;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean result = super.onTouchEvent(event);
-        LogUtil.d("ViewGroup::onTouchEvent::" + result);
-        return result;
+        LogUtil.d(position + "::onTouchEvent::" + result);
+        return true;
     }
+
+
 }

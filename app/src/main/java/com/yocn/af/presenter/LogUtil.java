@@ -1,5 +1,6 @@
 package com.yocn.af.presenter;
 
+import android.os.SystemClock;
 import android.util.Log;
 
 /**
@@ -12,6 +13,15 @@ public class LogUtil {
 
     public static void d(String msg) {
         Log.d(TAG, msg);
+    }
+
+    private static long lastTS = 0;
+
+    public static void logWithInterval(String msg) {
+        if (SystemClock.elapsedRealtime() - lastTS > 1000) {
+            lastTS = SystemClock.elapsedRealtime();
+            Log.d(TAG, msg);
+        }
     }
 
     public static void v(String msg) {

@@ -68,6 +68,10 @@
             android:name=".view.activity.TransitionTargetActivity"
             android:launchMode="standard"
             android:theme="@style/TransTheme" />
+        <activity
+            android:name=".view.activity.WeChatSendVoiceActivity"
+            android:launchMode="standard"
+            android:theme="@style/WhiteTheme" />
     </application>
 
 </manifest>
