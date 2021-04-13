@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.yocn.af.R;
-import com.yocn.af.presenter.LogUtil;
-import com.yocn.af.presenter.ViewUtil;
+import com.yocn.af.util.LogUtil;
+import com.yocn.af.util.ViewUtil;
 
 /**
  * https://blog.csdn.net/xyz_lmn/article/details/12517911
@@ -87,6 +87,7 @@ public class WeChatParentViewGroup extends RelativeLayout {
         boolean result = super.onInterceptTouchEvent(ev);
         if (hasIntercepted) {
             result = false;
+            hasIntercepted = false;
         } else {
             if (pointInRect(x, y, voiceRect)) {
                 result = false;

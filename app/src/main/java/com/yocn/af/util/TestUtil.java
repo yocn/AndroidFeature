@@ -1,7 +1,6 @@
 package com.yocn.af.util;
 
 import com.yocn.af.module.base.JumpBean;
-import com.yocn.af.presenter.LogUtil;
 import com.yocn.af.view.activity.ColorFadeInActivity;
 
 import java.lang.reflect.Field;

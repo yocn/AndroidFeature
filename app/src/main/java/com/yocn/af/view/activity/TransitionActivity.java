@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yocn.af.R;
-import com.yocn.af.presenter.LogUtil;
+import com.yocn.af.util.LogUtil;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;

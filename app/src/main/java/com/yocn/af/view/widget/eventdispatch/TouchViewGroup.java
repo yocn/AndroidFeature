@@ -5,8 +5,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
-import com.yocn.af.presenter.LogUtil;
-import com.yocn.af.presenter.ViewUtil;
+import com.yocn.af.util.LogUtil;
+import com.yocn.af.util.ViewUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

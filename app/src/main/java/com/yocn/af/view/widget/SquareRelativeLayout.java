@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.yocn.af.presenter.LogUtil;
-
 
 /**
  * @Author yocn

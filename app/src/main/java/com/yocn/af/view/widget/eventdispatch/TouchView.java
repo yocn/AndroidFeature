@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.yocn.af.presenter.LogUtil;
+import com.yocn.af.util.LogUtil;
 
 import androidx.annotation.Nullable;
 

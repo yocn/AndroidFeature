@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
-import com.yocn.af.presenter.LogUtil;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;

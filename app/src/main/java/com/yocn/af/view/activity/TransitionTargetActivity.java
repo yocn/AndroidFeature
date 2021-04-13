@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.widget.ImageView;
 
 import com.yocn.af.R;
-import com.yocn.af.presenter.DisplayUtil;
+import com.yocn.af.util.DisplayUtil;
 
 public class TransitionTargetActivity extends BaseActivity {
 

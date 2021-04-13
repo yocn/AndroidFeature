@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 
 import com.yocn.af.R;
-import com.yocn.af.presenter.LogUtil;
+import com.yocn.af.util.LogUtil;
 import com.yocn.af.util.TestUtil;
 
 import java.lang.reflect.InvocationTargetException;

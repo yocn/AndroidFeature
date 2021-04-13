@@ -48,7 +48,7 @@
         android:id="@+id/voice_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color6"
+        android:background="@color/half"
         android:visibility="gone" />
 
 </com.yocn.af.view.widget.WeChatParentViewGroup>

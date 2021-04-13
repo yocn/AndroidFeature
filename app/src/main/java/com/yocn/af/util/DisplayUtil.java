@@ -1,4 +1,4 @@
-package com.yocn.af.presenter;
+package com.yocn.af.util;
 
 import android.app.Activity;
 import android.content.Context;

@@ -8,8 +8,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.yocn.af.R;
-import com.yocn.af.presenter.LogUtil;
-import com.yocn.af.presenter.ViewUtil;
+import com.yocn.af.util.LogUtil;
+import com.yocn.af.util.ViewUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

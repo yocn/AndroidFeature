@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.yocn.af.module.base.JumpBean;
-import com.yocn.af.presenter.DisplayUtil;
+import com.yocn.af.util.DisplayUtil;
 import com.yocn.af.util.TestUtil;
 import com.yocn.af.view.activity.BaseActivity;
 import com.yocn.af.view.adapter.MainAdapter;

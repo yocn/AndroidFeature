@@ -11,7 +11,6 @@ import android.widget.VideoView;
 
 import com.yocn.af.R;
 import com.yocn.af.module.base.JumpBean;
-import com.yocn.af.presenter.LogUtil;
 import com.yocn.af.view.activity.ColorFadeInActivity;
 import com.yocn.af.view.activity.ColorFadeInActivity2;
 import com.yocn.af.view.activity.TestWindowActivity;
