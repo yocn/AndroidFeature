@@ -56,6 +56,7 @@ public class WeChatParentViewGroup extends RelativeLayout {
         @Override
         public void showVoiceView() {
             voiceView.setVisibility(View.VISIBLE);
+            voiceView.doStart();
         }
     };
 
@@ -64,6 +65,7 @@ public class WeChatParentViewGroup extends RelativeLayout {
         boolean result = super.dispatchTouchEvent(ev);
         if (ev.getAction() == MotionEvent.ACTION_UP) {
             voiceView.setVisibility(View.GONE);
+            voiceView.doDefault();
         }
         LogUtil.d(TAG + "::dispatchTouchEvent::" + result + "  " + ViewUtil.printEvent(ev));
         return result;
