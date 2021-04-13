@@ -5,7 +5,6 @@ import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.yocn.af.presenter.OnFocusInterface;
 import com.yocn.af.util.LogUtil;
 import com.yocn.af.util.ViewUtil;
 
@@ -42,12 +41,9 @@ public class WeChatVoiceTextView extends AppCompatTextView {
             onVoiceViewStatusListener.showVoiceView();
             setText("松开 结束");
         }
-        if (ev.getAction() == MotionEvent.ACTION_CANCEL) {
+        if (ev.getAction() == MotionEvent.ACTION_CANCEL || ev.getAction() == MotionEvent.ACTION_UP) {
             setText("按住 说话");
         }
-//        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
-//            onVoiceViewStatusListener.showVoiceView();
-//        }
         return true;
     }
 

@@ -84,7 +84,7 @@ public class WeChatParentViewGroup extends RelativeLayout {
         }
         float x = ev.getX();
         float y = ev.getY();
-        boolean result = super.onInterceptTouchEvent(ev);
+        boolean result;
         if (hasIntercepted) {
             result = false;
             hasIntercepted = false;
@@ -96,14 +96,13 @@ public class WeChatParentViewGroup extends RelativeLayout {
                 result = true;
             }
         }
-//        boolean result = super.onInterceptTouchEvent(ev);
+
         LogUtil.d(TAG + "::onInterceptTouchEvent::" + result + "  " + ViewUtil.printEvent(ev) + "      " + x + "/" + y + ":" + voiceRect.toShortString());
         return result;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        boolean result = super.onTouchEvent(event);
         boolean result = voiceView.onTouchEvent(event);
         LogUtil.d(TAG + "::onTouchEvent::" + result + "    ");
         return result;
