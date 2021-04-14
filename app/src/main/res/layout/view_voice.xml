@@ -55,6 +55,20 @@
         android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/tv_cancel_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_cancel"
+        android:layout_alignLeft="@id/tv_cancel"
+        android:layout_alignRight="@id/tv_cancel"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:text="松开 取消"
+        android:textColor="@color/write"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/tv_trans"
         android:layout_width="@dimen/height_trans"
         android:layout_height="@dimen/height_trans"
@@ -67,4 +81,18 @@
         android:text="文"
         android:textColor="@color/write"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_trans_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_trans"
+        android:layout_alignLeft="@id/tv_trans"
+        android:layout_alignRight="@id/tv_trans"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:text="转文字"
+        android:textColor="@color/write"
+        android:textSize="16sp"
+        android:visibility="gone" />
 </RelativeLayout>
