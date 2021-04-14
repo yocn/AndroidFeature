@@ -35,7 +35,7 @@ public class WeChatVoiceTextView extends AppCompatTextView {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         boolean result = super.dispatchTouchEvent(ev);
-        LogUtil.d(TAG + "::dispatchTouchEvent:::" + result + "  " + ViewUtil.printEvent(ev));
+//        LogUtil.d(TAG + "::dispatchTouchEvent:::" + result + "  " + ViewUtil.printEvent(ev));
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             vibrator(getContext());
             onVoiceViewStatusListener.showVoiceView();
@@ -50,7 +50,7 @@ public class WeChatVoiceTextView extends AppCompatTextView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean result = super.onTouchEvent(event);
-        LogUtil.d(TAG + "::onTouchEvent::" + result + "  " + ViewUtil.printEvent(event));
+//        LogUtil.d(TAG + "::onTouchEvent::" + result + "  " + ViewUtil.printEvent(event));
         return true;
     }
 

@@ -67,7 +67,7 @@ public class WeChatParentViewGroup extends RelativeLayout {
             voiceView.setVisibility(View.GONE);
             voiceView.doDefault();
         }
-        LogUtil.d(TAG + "::dispatchTouchEvent::" + result + "  " + ViewUtil.printEvent(ev));
+//        LogUtil.d(TAG + "::dispatchTouchEvent::" + result + "  " + ViewUtil.printEvent(ev));
         return result;
     }
 
@@ -99,18 +99,18 @@ public class WeChatParentViewGroup extends RelativeLayout {
             }
         }
 
-        LogUtil.d(TAG + "::onInterceptTouchEvent::" + result + "  " + ViewUtil.printEvent(ev) + "      " + x + "/" + y + ":" + voiceRect.toShortString());
+//        LogUtil.d(TAG + "::onInterceptTouchEvent::" + result + "  " + ViewUtil.printEvent(ev) + "      " + x + "/" + y + ":" + voiceRect.toShortString());
         return result;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean result = voiceView.onTouchEvent(event);
-        LogUtil.d(TAG + "::onTouchEvent::" + result + "    ");
+//        LogUtil.d(TAG + "::onTouchEvent::" + result + "    ");
         return result;
     }
 
-    private boolean pointInRect(float x, float y, Rect rect) {
+    public static boolean pointInRect(float x, float y, Rect rect) {
         return x > rect.left && x < rect.right && y > rect.top && y < rect.bottom;
     }
 }

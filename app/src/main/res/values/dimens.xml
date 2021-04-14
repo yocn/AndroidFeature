@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="arc_height">180dp</dimen>
+    <dimen name="arc_height_light">180dp</dimen>
+    <dimen name="arc_height_dark">170dp</dimen>
+    <dimen name="height_trans">70dp</dimen>
 
 </resources>
