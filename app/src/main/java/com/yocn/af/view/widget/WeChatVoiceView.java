@@ -47,6 +47,7 @@ public class WeChatVoiceView extends FrameLayout {
     private AnimatorSet translateTvScaleSmallAnim;
     private TextView cancelHintTv;
     private TextView translateHintTv;
+    private WeChatVoiceBubble weChatVoiceBubble;
 
     public WeChatVoiceView(@NonNull Context context) {
         this(context, null);
@@ -71,6 +72,7 @@ public class WeChatVoiceView extends FrameLayout {
         voiceIv = findViewById(R.id.iv_voice);
         weChatVoiceBottomArcLight = findViewById(R.id.bottom_arc_light);
         weChatVoiceBottomArcDark = findViewById(R.id.bottom_arc_dark);
+        weChatVoiceBubble = findViewById(R.id.bubble);
         cancelTv = findViewById(R.id.tv_cancel);
         translateTv = findViewById(R.id.tv_trans);
         bottomArcTransY = getResources().getDimensionPixelOffset(R.dimen.arc_height_light);
@@ -213,6 +215,7 @@ public class WeChatVoiceView extends FrameLayout {
     public boolean onTouchEvent(MotionEvent ev) {
         float x = ev.getX();
         float y = ev.getY();
+        weChatVoiceBubble.onTouchEvent(ev);
         if (weChatVoiceBottomArcLight.isOnRect(x, y)) {
             tryChangeToLight();
             tryChangeCancelTextToSmall();

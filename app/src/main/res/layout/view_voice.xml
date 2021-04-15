@@ -95,4 +95,14 @@
         android:textColor="@color/write"
         android:textSize="16sp"
         android:visibility="gone" />
+
+    <com.yocn.af.view.widget.WeChatVoiceBubble
+        android:id="@+id/bubble"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_round_rect"
+        android:layout_above="@id/tv_cancel"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="100dp"/>
+
 </RelativeLayout>
