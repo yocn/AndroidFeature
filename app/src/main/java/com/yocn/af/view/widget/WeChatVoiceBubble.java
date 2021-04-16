@@ -18,8 +18,24 @@ import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 
 public class WeChatVoiceBubble extends View {
+    // cancel、trans状态下的音波长度
+    private final int NUM_CANCEL_VOICE = 10;
+    // recording状态下的音波长度
+    private final int NUM_RECORD_VOICE = 24;
+    // 音波最短的高度
+    private final int minVoiceHeight = 10;
+    private final int maxVoiceHeight = 20;
+    private final float voiceLineViewHeight = maxVoiceHeight;
+    // 无声音下音波循环波纹最短的长度
+    private final int minVoiceSimulateLength = 6;
+    // 音波线宽度
+    private final int voiceLineWidth = 4;
+    // 音波线之间间隔的宽度
+    private final int voiceDividerWidth = 4;
+
     private Paint redPaint;
     private Paint greenPaint;
+    private Paint writePaint;
     private Paint currPaint;
     private RectF translateRectF;
     private RectF cancelRectF;
@@ -36,15 +52,24 @@ public class WeChatVoiceBubble extends View {
     private final float triangleLine = getResources().getDimensionPixelOffset(R.dimen.height_triangle_line);
     private final int topDivider = getResources().getDimensionPixelOffset(R.dimen.height_top_divider);
     private float deltaLeftX = 0, deltaRightX = 0, deltaTopY = 0, deltaTriangleX = 0;
+    private int[] cancelVoiceData = new int[NUM_CANCEL_VOICE];
+    private int[] centerVoiceData = new int[NUM_RECORD_VOICE];
+    private int cancelCurrIndex = 0, centerCurrIndex = 0;
+    private float cancelLineViewWidth, centerLineViewWidth, translateLineViewWidth;
+    private RectF translateVoiceRectF;
+    private RectF cancelVoiceRectF;
+    private RectF centerVoiceRectF;
+    private RectF currVoiceRectF;
+    private boolean recording = false;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
-            SHOW_TYPE.TYPE_NORMAL,
+            SHOW_TYPE.TYPE_CENTER,
             SHOW_TYPE.TYPE_CANCEL,
             SHOW_TYPE.TYPE_TRANSLATE
     })
     public @interface SHOW_TYPE {
-        int TYPE_NORMAL = 101;
+        int TYPE_CENTER = 101;
         int TYPE_CANCEL = 102;
         int TYPE_TRANSLATE = 103;
     }
@@ -76,8 +101,21 @@ public class WeChatVoiceBubble extends View {
         redPaint.setAntiAlias(true);
         redPaint.setColor(0xFFcb3a35);
         redPaint.setStyle(Paint.Style.FILL);
+        writePaint = new Paint();
+        writePaint.setAntiAlias(true);
+        writePaint.setColor(0xFFffffff);
+        writePaint.setStyle(Paint.Style.FILL);
+        writePaint.setStrokeWidth(voiceLineWidth);
         currPaint = greenPaint;
         triangleHeight = (float) Math.sqrt(Math.pow(triangleLine, 2) - Math.pow(triangleLine / 2, 2));
+        for (int i = 0; i < NUM_CANCEL_VOICE; i++) {
+            cancelVoiceData[i] = minVoiceHeight;
+        }
+        for (int i = 0; i < NUM_RECORD_VOICE; i++) {
+            centerVoiceData[i] = minVoiceHeight;
+        }
+        cancelLineViewWidth = translateLineViewWidth = NUM_CANCEL_VOICE * voiceLineWidth + (NUM_CANCEL_VOICE - 1) * voiceDividerWidth;
+        centerLineViewWidth = NUM_RECORD_VOICE * voiceLineWidth + (NUM_RECORD_VOICE - 1) * voiceDividerWidth;
     }
 
     @Override
@@ -102,6 +140,24 @@ public class WeChatVoiceBubble extends View {
             centerTrianglePoints[1] = new PointF(width / 2, height);
             centerTrianglePoints[2] = new PointF(width / 2 + triangleLine / 2, height - triangleHeight - 1);
 
+            int translateLineViewRightMargin = 50;
+            translateVoiceRectF = new RectF(
+                    width - translateLineViewRightMargin - translateLineViewWidth,
+                    height - triangleHeight - translateLineViewRightMargin - maxVoiceHeight,
+                    width - translateLineViewRightMargin,
+                    height - triangleHeight - translateLineViewRightMargin);
+
+            cancelVoiceRectF = new RectF(cancelRectF.width() / 2 - cancelLineViewWidth / 2,
+                    cancelRectF.height() / 2 - voiceLineViewHeight / 2,
+                    cancelRectF.width() / 2 + cancelLineViewWidth / 2,
+                    cancelRectF.height() / 2 + voiceLineViewHeight / 2);
+
+            centerVoiceRectF = new RectF(centerRectF.width() / 2 - centerLineViewWidth / 2,
+                    centerRectF.height() / 2 - voiceLineViewHeight / 2,
+                    centerRectF.width() / 2 + centerLineViewWidth / 2,
+                    centerRectF.height() / 2 + voiceLineViewHeight / 2);
+
+            currVoiceRectF = centerVoiceRectF;
             trianglePath = new Path();
             currRectF = new RectF(centerRectF);
             currTrianglePoints[0] = new PointF(centerTrianglePoints[0].x, centerTrianglePoints[0].y);
@@ -113,9 +169,11 @@ public class WeChatVoiceBubble extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        // 圆角矩形
         refreshRectRectF();
-        refreshTriangleRectF();
         canvas.drawRoundRect(currRectF, 50, 50, currPaint);
+        // 三角形
+        refreshTriangleRectF();
         trianglePath.reset();
         trianglePath.setFillType(Path.FillType.EVEN_ODD);
         trianglePath.moveTo(currTrianglePoints[0].x, currTrianglePoints[0].y);
@@ -123,8 +181,30 @@ public class WeChatVoiceBubble extends View {
         trianglePath.lineTo(currTrianglePoints[2].x, currTrianglePoints[2].y);
         trianglePath.close();
         canvas.drawPath(trianglePath, currPaint);
+        float centerLineY = currVoiceRectF.top + currVoiceRectF.height() / 2;
+        float lineStartX = currVoiceRectF.left;
+        int[] currData = getVoiceLineData();
+        // voiceView
+        for (int i = 0; i < currData.length; i++) {
+            canvas.drawLine(lineStartX + getLineStartX(i), centerLineY - currData[i] * 1f / 2,
+                    lineStartX + getLineStartX(i), centerLineY + currData[i] * 1f / 2, writePaint);
+        }
+        canvas.drawRect(translateVoiceRectF, writePaint);
+        canvas.drawRect(centerVoiceRectF, writePaint);
+        canvas.drawRect(cancelVoiceRectF, writePaint);
     }
 
+    private int getLineStartX(int index) {
+        int x = index * voiceLineWidth;
+        if (x > 0) {
+            x += index * voiceDividerWidth;
+        }
+        return x;
+    }
+
+    private int[] getVoiceLineData() {
+        return recording ? centerVoiceData : cancelVoiceData;
+    }
 
     private void refreshRectRectF() {
         if (!isSameRectRectF()) {
@@ -160,20 +240,26 @@ public class WeChatVoiceBubble extends View {
 
     public void setShowType(@SHOW_TYPE int type) {
         switch (type) {
-            case SHOW_TYPE.TYPE_NORMAL:
+            case SHOW_TYPE.TYPE_CENTER:
                 targetRectF = centerRectF;
                 targetTrianglePoints = centerTrianglePoints;
                 currPaint = greenPaint;
+                currVoiceRectF = centerVoiceRectF;
+                recording = true;
                 break;
             case SHOW_TYPE.TYPE_CANCEL:
                 targetRectF = cancelRectF;
                 targetTrianglePoints = cancelTrianglePoints;
                 currPaint = redPaint;
+                currVoiceRectF = cancelVoiceRectF;
+                recording = false;
                 break;
             case SHOW_TYPE.TYPE_TRANSLATE:
                 targetRectF = translateRectF;
                 targetTrianglePoints = translateTrianglePoints;
                 currPaint = greenPaint;
+                currVoiceRectF = translateVoiceRectF;
+                recording = false;
                 break;
             default:
         }
@@ -183,5 +269,9 @@ public class WeChatVoiceBubble extends View {
         deltaRightX = (targetRectF.right - currRectF.right) / num;
         deltaTriangleX = (targetTrianglePoints[0].x - currTrianglePoints[0].x) / num;
         invalidate();
+    }
+
+    private void startSimulate() {
+
     }
 }

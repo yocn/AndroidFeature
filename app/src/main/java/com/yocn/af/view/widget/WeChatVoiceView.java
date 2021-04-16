@@ -220,7 +220,7 @@ public class WeChatVoiceView extends FrameLayout {
             tryChangeCancelTextToSmall();
             tryChangeTranslateTextToSmall();
             voiceTv.setVisibility(View.VISIBLE);
-            weChatVoiceBubble.setShowType(WeChatVoiceBubble.SHOW_TYPE.TYPE_NORMAL);
+            weChatVoiceBubble.setShowType(WeChatVoiceBubble.SHOW_TYPE.TYPE_CENTER);
         } else {
             // 不在区域里，看在屏幕左边右边
             tryChangeToDark();
