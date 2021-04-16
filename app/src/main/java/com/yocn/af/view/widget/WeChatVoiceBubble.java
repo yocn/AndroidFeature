@@ -26,18 +26,15 @@ public class WeChatVoiceBubble extends View {
     private RectF centerRectF;
     private RectF currRectF;
     private RectF targetRectF;
-    private PointF[] translateTrianglePoints = new PointF[3];
-    private PointF[] cancelTrianglePoints = new PointF[3];
-    private PointF[] centerTrianglePoints = new PointF[3];
-    private PointF[] currTrianglePoints = new PointF[3];
+    private final PointF[] translateTrianglePoints = new PointF[3];
+    private final PointF[] cancelTrianglePoints = new PointF[3];
+    private final PointF[] centerTrianglePoints = new PointF[3];
+    private final PointF[] currTrianglePoints = new PointF[3];
     private PointF[] targetTrianglePoints = new PointF[3];
-    private int height;
-    private int type = SHOW_TYPE.TYPE_NORMAL;
-    private int width;
-    private float triangleLine = 50;
-    private float triangleHeight = 40;
+    private float triangleHeight;
     private Path trianglePath;
-    private int topDivider = 50;
+    private final float triangleLine = getResources().getDimensionPixelOffset(R.dimen.height_triangle_line);
+    private final int topDivider = getResources().getDimensionPixelOffset(R.dimen.height_top_divider);
     private float deltaLeftX = 0, deltaRightX = 0, deltaTopY = 0, deltaTriangleX = 0;
 
     @Retention(RetentionPolicy.SOURCE)
@@ -47,9 +44,9 @@ public class WeChatVoiceBubble extends View {
             SHOW_TYPE.TYPE_TRANSLATE
     })
     public @interface SHOW_TYPE {
-        public int TYPE_NORMAL = 101;
-        public int TYPE_CANCEL = 102;
-        public int TYPE_TRANSLATE = 103;
+        int TYPE_NORMAL = 101;
+        int TYPE_CANCEL = 102;
+        int TYPE_TRANSLATE = 103;
     }
 
     public WeChatVoiceBubble(Context context) {
@@ -86,8 +83,8 @@ public class WeChatVoiceBubble extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        height = getResources().getDimensionPixelSize(R.dimen.height_round_rect);
-        width = getMeasuredWidth();
+        int height = getResources().getDimensionPixelSize(R.dimen.height_round_rect);
+        float width = getMeasuredWidth();
         if (translateRectF == null) {
             translateRectF = new RectF(0, 0, width, height - triangleHeight);
             cancelRectF = new RectF(0, topDivider, height - triangleHeight, height - triangleHeight);
@@ -134,6 +131,7 @@ public class WeChatVoiceBubble extends View {
             currRectF.top += deltaTopY;
             currRectF.left += deltaLeftX;
             currRectF.right += deltaRightX;
+            invalidate();
         }
     }
 
@@ -142,6 +140,7 @@ public class WeChatVoiceBubble extends View {
             currTrianglePoints[0].x += deltaTriangleX;
             currTrianglePoints[1].x += deltaTriangleX;
             currTrianglePoints[2].x += deltaTriangleX;
+            invalidate();
         }
     }
 
@@ -160,7 +159,6 @@ public class WeChatVoiceBubble extends View {
     }
 
     public void setShowType(@SHOW_TYPE int type) {
-        this.type = type;
         switch (type) {
             case SHOW_TYPE.TYPE_NORMAL:
                 targetRectF = centerRectF;
