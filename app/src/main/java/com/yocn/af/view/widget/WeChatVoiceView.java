@@ -215,21 +215,23 @@ public class WeChatVoiceView extends FrameLayout {
     public boolean onTouchEvent(MotionEvent ev) {
         float x = ev.getX();
         float y = ev.getY();
-        weChatVoiceBubble.onTouchEvent(ev);
         if (weChatVoiceBottomArcLight.isOnRect(x, y)) {
             tryChangeToLight();
             tryChangeCancelTextToSmall();
             tryChangeTranslateTextToSmall();
             voiceTv.setVisibility(View.VISIBLE);
+            weChatVoiceBubble.setShowType(WeChatVoiceBubble.SHOW_TYPE.TYPE_NORMAL);
         } else {
             // 不在区域里，看在屏幕左边右边
             tryChangeToDark();
             if (x < screenWH[0] / 2) {
                 tryChangeCancelTextToBigger();
                 tryChangeTranslateTextToSmall();
+                weChatVoiceBubble.setShowType(WeChatVoiceBubble.SHOW_TYPE.TYPE_CANCEL);
             } else {
                 tryChangeTranslateTextToBigger();
                 tryChangeCancelTextToSmall();
+                weChatVoiceBubble.setShowType(WeChatVoiceBubble.SHOW_TYPE.TYPE_TRANSLATE);
             }
             voiceTv.setVisibility(View.GONE);
         }

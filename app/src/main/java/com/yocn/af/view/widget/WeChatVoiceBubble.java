@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.yocn.af.R;
+import com.yocn.af.util.LogUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,6 +26,7 @@ public class WeChatVoiceBubble extends View {
     private RectF cancelRectF;
     private RectF centerRectF;
     private RectF currRectF;
+    private RectF targetRectF;
     private PointF[] translateTrianglePoints = new PointF[3];
     private PointF[] cancelTrianglePoints = new PointF[3];
     private PointF[] centerTrianglePoints = new PointF[3];
@@ -110,16 +112,59 @@ public class WeChatVoiceBubble extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawRoundRect(currRectF, 50, 50, currPaint);
+        canvas.drawRoundRect(getTmpRectF(), 50, 50, currPaint);
+        trianglePath.reset();
         trianglePath.setFillType(Path.FillType.EVEN_ODD);
         trianglePath.moveTo(currTrianglePoints[0].x, currTrianglePoints[0].y);
         trianglePath.lineTo(currTrianglePoints[1].x, currTrianglePoints[1].y);
         trianglePath.lineTo(currTrianglePoints[2].x, currTrianglePoints[2].y);
         trianglePath.close();
-        canvas.drawPath(trianglePath, greenPaint);
+        canvas.drawPath(trianglePath, currPaint);
+    }
+
+    float deltaLeftX = 0;
+    float deltaRightX = 0;
+
+    private RectF getTmpRectF() {
+        if (targetRectF == null) {
+            return currRectF;
+        }
+        if (!isSame()) {
+            currRectF.left = currRectF.left + deltaLeftX;
+            currRectF.right = currRectF.right + deltaRightX;
+        }
+        return currRectF;
+    }
+
+    private boolean isSame() {
+        boolean result = Math.abs((currRectF.right - currRectF.left) - (targetRectF.right - targetRectF.left)) < 10;
+        return result;
     }
 
     public void setShowType(@SHOW_TYPE int type) {
         this.type = type;
+        switch (type) {
+            case SHOW_TYPE.TYPE_NORMAL:
+                targetRectF = centerRectF;
+                currTrianglePoints = centerTrianglePoints;
+                currPaint = greenPaint;
+                break;
+            case SHOW_TYPE.TYPE_CANCEL:
+                targetRectF = cancelRectF;
+                currTrianglePoints = cancelTrianglePoints;
+                currPaint = redPaint;
+                break;
+            case SHOW_TYPE.TYPE_TRANSLATE:
+                targetRectF = translateRectF;
+                currTrianglePoints = translateTrianglePoints;
+                currPaint = greenPaint;
+                break;
+            default:
+        }
+        int num = 10;
+        deltaLeftX = (targetRectF.left - currRectF.left) / num;
+        deltaRightX = (targetRectF.right - currRectF.right) / num;
+        LogUtil.d("deltaLeftX：" + deltaLeftX + "  deltaRightX： " + deltaRightX);
+        invalidate();
     }
 }
