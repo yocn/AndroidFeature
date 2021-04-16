@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.yocn.af.R;
-import com.yocn.af.util.LogUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -31,12 +30,15 @@ public class WeChatVoiceBubble extends View {
     private PointF[] cancelTrianglePoints = new PointF[3];
     private PointF[] centerTrianglePoints = new PointF[3];
     private PointF[] currTrianglePoints = new PointF[3];
+    private PointF[] targetTrianglePoints = new PointF[3];
     private int height;
     private int type = SHOW_TYPE.TYPE_NORMAL;
     private int width;
     private float triangleLine = 50;
     private float triangleHeight = 40;
     private Path trianglePath;
+    private int topDivider = 50;
+    private float deltaLeftX = 0, deltaRightX = 0, deltaTopY = 0, deltaTriangleX = 0;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
@@ -88,8 +90,8 @@ public class WeChatVoiceBubble extends View {
         width = getMeasuredWidth();
         if (translateRectF == null) {
             translateRectF = new RectF(0, 0, width, height - triangleHeight);
-            cancelRectF = new RectF(0, 0, height - triangleHeight, height - triangleHeight);
-            centerRectF = new RectF(width / 2 - (height - triangleHeight), 0, width / 2 + (height - triangleHeight), height - triangleHeight);
+            cancelRectF = new RectF(0, topDivider, height - triangleHeight, height - triangleHeight);
+            centerRectF = new RectF(width / 2 - (height - triangleHeight), topDivider, width / 2 + (height - triangleHeight), height - triangleHeight);
 
             translateTrianglePoints[0] = new PointF(width - cancelRectF.width() / 2 - triangleLine / 2, height - triangleHeight - 1);
             translateTrianglePoints[1] = new PointF(width - cancelRectF.width() / 2, height);
@@ -104,15 +106,19 @@ public class WeChatVoiceBubble extends View {
             centerTrianglePoints[2] = new PointF(width / 2 + triangleLine / 2, height - triangleHeight - 1);
 
             trianglePath = new Path();
-            currRectF = centerRectF;
-            currTrianglePoints = centerTrianglePoints;
+            currRectF = new RectF(centerRectF);
+            currTrianglePoints[0] = new PointF(centerTrianglePoints[0].x, centerTrianglePoints[0].y);
+            currTrianglePoints[1] = new PointF(centerTrianglePoints[1].x, centerTrianglePoints[1].y);
+            currTrianglePoints[2] = new PointF(centerTrianglePoints[2].x, centerTrianglePoints[2].y);
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawRoundRect(getTmpRectF(), 50, 50, currPaint);
+        refreshRectRectF();
+        refreshTriangleRectF();
+        canvas.drawRoundRect(currRectF, 50, 50, currPaint);
         trianglePath.reset();
         trianglePath.setFillType(Path.FillType.EVEN_ODD);
         trianglePath.moveTo(currTrianglePoints[0].x, currTrianglePoints[0].y);
@@ -122,23 +128,35 @@ public class WeChatVoiceBubble extends View {
         canvas.drawPath(trianglePath, currPaint);
     }
 
-    float deltaLeftX = 0;
-    float deltaRightX = 0;
 
-    private RectF getTmpRectF() {
-        if (targetRectF == null) {
-            return currRectF;
+    private void refreshRectRectF() {
+        if (!isSameRectRectF()) {
+            currRectF.top += deltaTopY;
+            currRectF.left += deltaLeftX;
+            currRectF.right += deltaRightX;
         }
-        if (!isSame()) {
-            currRectF.left = currRectF.left + deltaLeftX;
-            currRectF.right = currRectF.right + deltaRightX;
-        }
-        return currRectF;
     }
 
-    private boolean isSame() {
-        boolean result = Math.abs((currRectF.right - currRectF.left) - (targetRectF.right - targetRectF.left)) < 10;
-        return result;
+    private void refreshTriangleRectF() {
+        if (!isSameTriangleRectF()) {
+            currTrianglePoints[0].x += deltaTriangleX;
+            currTrianglePoints[1].x += deltaTriangleX;
+            currTrianglePoints[2].x += deltaTriangleX;
+        }
+    }
+
+    private boolean isSameRectRectF() {
+        if (targetRectF == null) {
+            return true;
+        }
+        return Math.abs((currRectF.right - currRectF.left) - (targetRectF.right - targetRectF.left)) < 10;
+    }
+
+    private boolean isSameTriangleRectF() {
+        if (targetTrianglePoints == null || targetTrianglePoints[0] == null) {
+            return true;
+        }
+        return Math.abs(targetTrianglePoints[0].x - currTrianglePoints[0].x) < 10;
     }
 
     public void setShowType(@SHOW_TYPE int type) {
@@ -146,25 +164,26 @@ public class WeChatVoiceBubble extends View {
         switch (type) {
             case SHOW_TYPE.TYPE_NORMAL:
                 targetRectF = centerRectF;
-                currTrianglePoints = centerTrianglePoints;
+                targetTrianglePoints = centerTrianglePoints;
                 currPaint = greenPaint;
                 break;
             case SHOW_TYPE.TYPE_CANCEL:
                 targetRectF = cancelRectF;
-                currTrianglePoints = cancelTrianglePoints;
+                targetTrianglePoints = cancelTrianglePoints;
                 currPaint = redPaint;
                 break;
             case SHOW_TYPE.TYPE_TRANSLATE:
                 targetRectF = translateRectF;
-                currTrianglePoints = translateTrianglePoints;
+                targetTrianglePoints = translateTrianglePoints;
                 currPaint = greenPaint;
                 break;
             default:
         }
         int num = 10;
+        deltaTopY = (targetRectF.top - currRectF.top) / num;
         deltaLeftX = (targetRectF.left - currRectF.left) / num;
         deltaRightX = (targetRectF.right - currRectF.right) / num;
-        LogUtil.d("deltaLeftX：" + deltaLeftX + "  deltaRightX： " + deltaRightX);
+        deltaTriangleX = (targetTrianglePoints[0].x - currTrianglePoints[0].x) / num;
         invalidate();
     }
 }
