@@ -51,7 +51,7 @@ public class WeChatVoiceBubble extends View {
     private Path trianglePath;
     private final float triangleLine = getResources().getDimensionPixelOffset(R.dimen.height_triangle_line);
     private final int topDivider = getResources().getDimensionPixelOffset(R.dimen.height_top_divider);
-    private float deltaLeftX = 0, deltaRightX = 0, deltaTopY = 0, deltaTriangleX = 0;
+    private float deltaLeftX = 0, deltaRightX = 0, deltaTopY = 0, deltaTriangleX = 0, deltaVoiceX = 0, deltaVoiceY = 0;
     private int[] cancelVoiceData = new int[NUM_CANCEL_VOICE];
     private int[] centerVoiceData = new int[NUM_RECORD_VOICE];
     private int cancelCurrIndex = 0, centerCurrIndex = 0;
@@ -60,7 +60,8 @@ public class WeChatVoiceBubble extends View {
     private RectF cancelVoiceRectF;
     private RectF centerVoiceRectF;
     private RectF currVoiceRectF;
-    private boolean recording = false;
+    private RectF targetVoiceRectF;
+    private boolean recording = true;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
@@ -147,17 +148,17 @@ public class WeChatVoiceBubble extends View {
                     width - translateLineViewRightMargin,
                     height - triangleHeight - translateLineViewRightMargin);
 
-            cancelVoiceRectF = new RectF(cancelRectF.width() / 2 - cancelLineViewWidth / 2,
-                    cancelRectF.height() / 2 - voiceLineViewHeight / 2,
-                    cancelRectF.width() / 2 + cancelLineViewWidth / 2,
-                    cancelRectF.height() / 2 + voiceLineViewHeight / 2);
+            cancelVoiceRectF = new RectF(cancelRectF.left + cancelRectF.width() / 2 - cancelLineViewWidth / 2,
+                    cancelRectF.top + cancelRectF.height() / 2 - voiceLineViewHeight / 2,
+                    cancelRectF.left + cancelRectF.width() / 2 + cancelLineViewWidth / 2,
+                    cancelRectF.top + cancelRectF.height() / 2 + voiceLineViewHeight / 2);
 
-            centerVoiceRectF = new RectF(centerRectF.width() / 2 - centerLineViewWidth / 2,
-                    centerRectF.height() / 2 - voiceLineViewHeight / 2,
-                    centerRectF.width() / 2 + centerLineViewWidth / 2,
-                    centerRectF.height() / 2 + voiceLineViewHeight / 2);
+            centerVoiceRectF = new RectF(centerRectF.left + centerRectF.width() / 2 - centerLineViewWidth / 2,
+                    centerRectF.top + centerRectF.height() / 2 - voiceLineViewHeight / 2,
+                    centerRectF.left + centerRectF.width() / 2 + centerLineViewWidth / 2,
+                    centerRectF.top + centerRectF.height() / 2 + voiceLineViewHeight / 2);
 
-            currVoiceRectF = centerVoiceRectF;
+            currVoiceRectF = new RectF(centerVoiceRectF);
             trianglePath = new Path();
             currRectF = new RectF(centerRectF);
             currTrianglePoints[0] = new PointF(centerTrianglePoints[0].x, centerTrianglePoints[0].y);
@@ -181,6 +182,8 @@ public class WeChatVoiceBubble extends View {
         trianglePath.lineTo(currTrianglePoints[2].x, currTrianglePoints[2].y);
         trianglePath.close();
         canvas.drawPath(trianglePath, currPaint);
+
+        refreshVoiceRectF();
         float centerLineY = currVoiceRectF.top + currVoiceRectF.height() / 2;
         float lineStartX = currVoiceRectF.left;
         int[] currData = getVoiceLineData();
@@ -189,9 +192,6 @@ public class WeChatVoiceBubble extends View {
             canvas.drawLine(lineStartX + getLineStartX(i), centerLineY - currData[i] * 1f / 2,
                     lineStartX + getLineStartX(i), centerLineY + currData[i] * 1f / 2, writePaint);
         }
-        canvas.drawRect(translateVoiceRectF, writePaint);
-        canvas.drawRect(centerVoiceRectF, writePaint);
-        canvas.drawRect(cancelVoiceRectF, writePaint);
     }
 
     private int getLineStartX(int index) {
@@ -224,6 +224,14 @@ public class WeChatVoiceBubble extends View {
         }
     }
 
+    private void refreshVoiceRectF() {
+        if (!isSameVoiceRectF()) {
+            currVoiceRectF.left += deltaVoiceX;
+            currVoiceRectF.top += deltaVoiceY;
+            invalidate();
+        }
+    }
+
     private boolean isSameRectRectF() {
         if (targetRectF == null) {
             return true;
@@ -238,27 +246,34 @@ public class WeChatVoiceBubble extends View {
         return Math.abs(targetTrianglePoints[0].x - currTrianglePoints[0].x) < 10;
     }
 
+    private boolean isSameVoiceRectF() {
+        if (targetVoiceRectF == null) {
+            return true;
+        }
+        return Math.abs(currVoiceRectF.left - targetVoiceRectF.left) < 10;
+    }
+
     public void setShowType(@SHOW_TYPE int type) {
         switch (type) {
             case SHOW_TYPE.TYPE_CENTER:
                 targetRectF = centerRectF;
                 targetTrianglePoints = centerTrianglePoints;
                 currPaint = greenPaint;
-                currVoiceRectF = centerVoiceRectF;
+                targetVoiceRectF = centerVoiceRectF;
                 recording = true;
                 break;
             case SHOW_TYPE.TYPE_CANCEL:
                 targetRectF = cancelRectF;
                 targetTrianglePoints = cancelTrianglePoints;
                 currPaint = redPaint;
-                currVoiceRectF = cancelVoiceRectF;
+                targetVoiceRectF = cancelVoiceRectF;
                 recording = false;
                 break;
             case SHOW_TYPE.TYPE_TRANSLATE:
                 targetRectF = translateRectF;
                 targetTrianglePoints = translateTrianglePoints;
                 currPaint = greenPaint;
-                currVoiceRectF = translateVoiceRectF;
+                targetVoiceRectF = translateVoiceRectF;
                 recording = false;
                 break;
             default:
@@ -268,6 +283,8 @@ public class WeChatVoiceBubble extends View {
         deltaLeftX = (targetRectF.left - currRectF.left) / num;
         deltaRightX = (targetRectF.right - currRectF.right) / num;
         deltaTriangleX = (targetTrianglePoints[0].x - currTrianglePoints[0].x) / num;
+        deltaVoiceX = (targetVoiceRectF.left - currVoiceRectF.left) / num;
+        deltaVoiceY = (targetVoiceRectF.top - currVoiceRectF.top) / num;
         invalidate();
     }
 
