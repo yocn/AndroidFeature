@@ -5,25 +5,29 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Region;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.yocn.af.R;
 import com.yocn.af.util.DisplayUtil;
+import com.yocn.af.util.LogUtil;
 
 import androidx.annotation.Nullable;
 
 public class WeChatVoiceBottomArc extends View {
-
+    private final int HEIGHT_MARGIN = 20;
     private Paint paint;
-    private RectF rectf;
     private String type;
     private int height;
     private int screenWidth;
     private int[] screenWH;
+    private Path path;
 
     public WeChatVoiceBottomArc(Context context) {
         this(context, null);
@@ -54,10 +58,12 @@ public class WeChatVoiceBottomArc extends View {
     }
 
     private void init() {
-        height = getContext().getResources().getDimensionPixelSize(R.dimen.arc_height_dark);
+        boolean isLight = isLightMode();
+        height = getContext().getResources().getDimensionPixelSize(isLight ? R.dimen.arc_height_light : R.dimen.arc_height_dark);
         screenWH = DisplayUtil.getHW(getContext());
         screenWidth = screenWH[0];
-        if (isLightMode()) {
+        path = new Path();
+        if (isLight) {
             initLight();
         } else {
             initDark();
@@ -69,7 +75,6 @@ public class WeChatVoiceBottomArc extends View {
         paint.setAntiAlias(true);
         paint.setColor(0xFFCCC7CC);
         paint.setStyle(Paint.Style.FILL);
-        rectf = new RectF(-screenWidth / 2, 0, screenWidth + screenWidth / 2, height * 6);
         LinearGradient linearGradient = new LinearGradient(screenWidth / 2, 0, screenWidth / 2, height,
                 0xFF999999, 0xFFe6e6e6, Shader.TileMode.CLAMP);
         paint.setShader(linearGradient);
@@ -80,26 +85,42 @@ public class WeChatVoiceBottomArc extends View {
         paint.setAntiAlias(true);
         paint.setColor(0xFF4c4c4c);
         paint.setStyle(Paint.Style.FILL);
-        rectf = new RectF(-screenWidth / 2, 20, screenWidth + screenWidth / 2, height * 6);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawArc(rectf, 0, 360, false, paint);
-    }
-
-
-    private boolean pointInRect(float x, float y) {
-        Rect rect = new Rect(0, screenWH[1] - height, screenWH[0], screenWH[1]);
-        return pointInRect(x, y, rect);
-    }
-
-    private boolean pointInRect(float x, float y, Rect rect) {
-        return x > rect.left && x < rect.right && y > rect.top && y < rect.bottom;
+        path.moveTo(0, height / 2);
+        path.cubicTo(screenWidth / 4, 0, screenWidth * 3 / 4, 0, screenWidth, height / 2);
+        path.lineTo(screenWidth, height);
+        path.lineTo(0, height);
+        path.lineTo(0, height / 2);
+        path.close();
+        canvas.drawPath(path, paint);
     }
 
     public boolean isOnRect(float x, float y) {
-        return pointInRect(x, y);
+        float viewY = getY();
+        return isInTriangle(new Point(screenWidth / 2, 0), new Point(0, height), new Point(screenWidth, height), new Point((int) x, (int) (y - viewY)));
     }
+
+    public boolean isInTriangle(Point A, Point B, Point C, Point P) {
+        double ABC = triAngleArea(A, B, C);
+        double ABp = triAngleArea(A, B, P);
+        double ACp = triAngleArea(A, C, P);
+        double BCp = triAngleArea(B, C, P);
+        if ((int) ABC == (int) (ABp + ACp + BCp)) {// 若面积之和等于原三角形面积，证明点在三角形内,这里做了一个约等于小数点之后没有算（25714.25390625、25714.255859375）
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private double triAngleArea(Point A, Point B, Point C) {// 由三个点计算这三个点组成三角形面积
+        double result = Math.abs((A.x * B.y + B.x * C.y
+                + C.x * A.y - B.x * A.y - C.x
+                * B.y - A.x * C.y) / 2.0D);
+        return result;
+    }
+
 }
