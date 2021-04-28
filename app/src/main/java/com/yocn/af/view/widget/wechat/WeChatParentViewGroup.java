@@ -67,7 +67,7 @@ public class WeChatParentViewGroup extends RelativeLayout {
             voiceView.setVisibility(View.GONE);
             voiceView.doDefault();
         }
-//        LogUtil.d(TAG + "::dispatchTouchEvent::" + result + "  " + ViewUtil.printEvent(ev));
+        LogUtil.d(TAG + "::dispatchTouchEvent::" + result + "  " + ViewUtil.printEvent(ev));
         return result;
     }
 

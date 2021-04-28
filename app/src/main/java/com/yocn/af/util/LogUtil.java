@@ -15,6 +15,10 @@ public class LogUtil {
         Log.d(TAG, msg);
     }
 
+    public static void d(String tag, String msg) {
+        Log.d(tag, msg);
+    }
+
     private static long lastTS = 0;
 
     public static void logWithInterval(String msg) {

@@ -43,7 +43,7 @@ public class BtnBehavior extends CoordinatorLayout.Behavior<Button> {
 
         int x = width - left - button.getWidth();
         int y = top;
-        LogUtil.d("onDependentViewChanged x:" + x + " y:" + y + "   width：" + width);
+//        LogUtil.d("onDependentViewChanged x:" + x + " y:" + y + "   width：" + width);
 
         setPosition(button, x, y);
         return true;
