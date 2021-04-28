@@ -1,4 +1,4 @@
-package com.yocn.af.view.widget;
+package com.yocn.af.view.widget.wechat;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

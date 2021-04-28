@@ -1,4 +1,4 @@
-package com.yocn.af.view.widget;
+package com.yocn.af.view.widget.wechat;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -99,7 +99,7 @@ public class WeChatParentViewGroup extends RelativeLayout {
             }
         }
 
-//        LogUtil.d(TAG + "::onInterceptTouchEvent::" + result + "  " + ViewUtil.printEvent(ev) + "      " + x + "/" + y + ":" + voiceRect.toShortString());
+        LogUtil.d(TAG + "::onInterceptTouchEvent::" + result + "  " + ViewUtil.printEvent(ev) + "      " + x + "/" + y + ":" + voiceRect.toShortString());
         return result;
     }
 

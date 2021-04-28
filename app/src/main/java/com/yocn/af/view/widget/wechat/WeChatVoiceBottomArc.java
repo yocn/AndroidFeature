@@ -1,4 +1,4 @@
-package com.yocn.af.view.widget;
+package com.yocn.af.view.widget.wechat;
 
 import android.content.Context;
 import android.content.res.TypedArray;

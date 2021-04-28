@@ -13,6 +13,7 @@ import com.yocn.af.R;
 import com.yocn.af.module.base.JumpBean;
 import com.yocn.af.view.activity.ColorFadeInActivity;
 import com.yocn.af.view.activity.ColorFadeInActivity2;
+import com.yocn.af.view.activity.CoordinatorLayoutActivity;
 import com.yocn.af.view.activity.TestWindowActivity;
 import com.yocn.af.view.activity.TouchEventDispatchActivity;
 import com.yocn.af.view.activity.TransitionActivity;
@@ -53,7 +54,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         list.add(new JumpBean("TestWindowActivity", TestWindowActivity.class));
         list.add(new JumpBean("Transition", TransitionActivity.class));
         list.add(new JumpBean("WeChatSendVoice", WeChatSendVoiceActivity.class));
-        list.add(new JumpBean("10", ColorFadeInActivity.class));
+        list.add(new JumpBean("CoordinatorLayout", CoordinatorLayoutActivity.class));
         list.add(new JumpBean("11", ColorFadeInActivity.class));
         list.add(new JumpBean("12", ColorFadeInActivity.class));
         list.add(new JumpBean("13", ColorFadeInActivity.class));
